@@ -427,7 +427,125 @@ function mostrarListaPeliculas() {
           <div class="movie-poster">
             <img style="width:50px;height="70px"" src="${programas[index].imagen}" alt="${programas[index].titulo}">  
           </div>
-          <div class="movie-info">
+      const programas = [
+       {
+         titulo: "Terminal",
+         detalles: "Estrenada en 2023. Duración 2h 19m. Género crimen,drama.",
+         imagen: "https://image.tmdb.org/t/p/w342/eCvBFo3jjKViSuhcsOdVbcsFCq4.jpg",
+         video: "https://be7713.rcr82.waw05.cdn112.com/hls2/02/03118/994cyf53hizk_h/index-v1-a1.m3u8?t=RdHXrJ6pcJwkkaKyVTQ8jU_yiAsFsBTDGzOjd6O9nkE&s=1693181873&e=43200&f=15591378&srv=25&asn=27884&sp=2000"
+       },
+       {
+         titulo: "La última casa a la izquierda",
+         detalles: "Estrenada en 2009. Duración 1h 50m. Género crimen,drama.",
+         imagen: "https://image.tmdb.org/t/p/w342/1xFvzZOwRmRelrHsZycIIfnjq3g.jpg",
+         video: "https://be6721.rcr72.waw04.cdn112.com/hls2/01/03521/0umi57bhls3c_h/index-v1-a1.m3u8?t=V6QuqcTONxHlWrtKdoDdYIE981YX0k60M4PvDr7lM-k&s=1693181713&e=43200&f=17605046&srv=01&asn=27884&sp=2000"
+       },
+       {
+         titulo: "Breaking:Quiebre",
+         detalles: "Estrenada en 2022. Duración 1h 3m. Género crimen,drama.",
+         imagen: "https://image.tmdb.org/t/p/w342/flvBRXTrbGr5SyGgCk3b3JACutL.jpg",
+         video: "https://be2719.rcr22.ams01.cdn112.com/hls2/01/03276/wyju0jyeh835_h/index-v1-a1.m3u8?t=2S5iDjKJLGQ1fIxVp1qjbFepTpX6_mXHOv6HREw6HaM&s=1693181586&e=43200&f=16383686&srv=10&asn=27884&sp=2000"
+       },
+       {
+        titulo: "Misión: Imposible - Sentencia mortal parte uno",
+        detalles: "Estrenada en 2023. Duración 2h 41m. Género crimen,drama.",
+        imagen: "https://image.tmdb.org/t/p/w342/83sGKvCv2T2CulYbd40Aeduc7n2.jpg",
+        video: "https://be7713.rcr82.waw05.cdn112.com/hls2/01/04198/5tnlfbmayfod_h/index-v1-a1.m3u8?t=nvc8G5UHyuz2p06PB-gam9qWTzQ92wgBUy52Tz6oIxg&s=1693181461&e=43200&f=20993037&srv=21&asn=27884&sp=2000"
+      },
+       {
+         titulo: "Insidious: La puerta roja",
+         detalles: "Estrenada en 2023. Duración 1h 7m. Género crimen,drama.",
+         imagen: "https://image.tmdb.org/t/p/w342/wD4eLIHUaTvrXQqAzlfduHQ1NYg.jpg",
+         video: "https://apq5wfuf.sw-cdnstream.com/hls2/01/01210/rrzzv7kilp5g_n/index-v1-a1.m3u8?t=4RoFRd1wKVZ-wTsshLSO-eJj8BaP0PKgqZ6wFhH8foc&s=1693181198&e=129600&f=6051024&srv=taRfBm9JSx9c&i=0.4&sp=500&p1=taRfBm9JSx9c&p2=taRfBm9JSx9c&asn=27884"
+       },
+      {
+        titulo: "Megalodón 2: El gran abismo",
+        detalles: "Estrenada en 2023. Duración 1h 54m. Género acción,cienciaficcion",
+        imagen: "https://image.tmdb.org/t/p/w342/mBgynPDplmo5JTY9VfGqY35OjDu.jpg", 
+        video: "https://delivery-node-5scphn10nmokfrsv.voe-network.net/engine/hls2-c/01/09351/ao7toc5uwgla_,n,.urlset/index-v1-a1.m3u8?t=IOB7u4aNIaQ6tpTxc9dvusX7Z6w5m4s9w10fr_O-JoM&s=1693156202&e=14400&f=46758474&node=delivery-node-dab59unagzatnxkw.voe-network.net&i=190.92&sp=2500&asn=27884"
+      },
+      {
+        titulo: "Oppenheimer",
+        detalles: "Estrenada en 2023. Duracion 3h  Género drama Historico.",  
+        imagen: "https://image.tmdb.org/t/p/w342/ncKCQVXgk4BcQV6XbvesgZ2zLvZ.jpg",
+        video: "https://be6721.rcr72.waw04.cdn112.com/hls2/01/04246/d81sy5d0iect_h/index-v1-a1.m3u8?t=FU9logdna9KmbwVXCsErmrRSrOM-1AyLSipU4ChzUF8&s=1693155316&e=43200&f=21231460&srv=26&asn=27884&sp=2000"
+      },
+      {
+        titulo: "Ghosting", 
+        detalles: "Estrenada en 2023. Duración 2h . Género Romace,comedia.",
+        imagen: "https://image.tmdb.org/t/p/w342/zSw2JeQ03GivcS4VKJmWK5sYi1F.jpg",
+        video: "https://be2719.rcr22.ams01.cdn112.com/hls2/01/03594/qs2i584leqrs_h/index-v1-a1.m3u8?t=rskiGkXdAJL5qkABW40L0jCyXSNQQ48p6AWQOQAqaAA&s=1693155480&e=43200&f=17974044&srv=20&asn=27884&sp=2000"
+      },
+            {
+        titulo: "Ruby: Aventuras de una kraken adolescente", 
+        detalles: "Estrenada en 2023. Duración 1h 31m. Género Animacion,comedia.",
+        imagen: "https://image.tmdb.org/t/p/w1280/ioCuhiUs0SW5UgembG0UiQZWPLY.jpg",
+        video: "https://be6721.rcr72.waw04.cdn112.com/hls2/01/04246/gmjvbvsz0wks_h/index-v1-a1.m3u8?t=lGc2JkALTL05lpRymou1kDsmYhnjQlzFTHXPkMg0ShA&s=1693155418&e=43200&f=21231225&srv=24&asn=27884&sp=2000"
+      },
+      {
+        titulo: "Resident Evil: Bienvenidos a Raccoon City",
+        detalles: "Estrenada en 2021. Duración 1h 47m. Género Accion,terror.",
+        imagen: "https://image.tmdb.org/t/p/w342/htpKy3nUBNtCsaTj2pWU9JwPKlj.jpg",
+        video: "https://be7713.rcr82.waw05.cdn112.com/hls2/02/02925/9fb6rxcauy0n_h/index-v1-a1.m3u8?t=EE42rB_jofdBbQ_p1mNnB2CDxctrVZUxeLPID7x_NKU&s=1693155095&e=43200&f=14625211&srv=28&asn=27884&sp=2000"
+      },
+      {
+        titulo: "Guardianes de la Galaxia: Volumen 3",
+        detalles: "Estrenada en 2023. Duración 2h 31m. Género Accion,Aventura.",
+        imagen: "https://image.tmdb.org/t/p/w342/raSxI20efBO4WszIO7UVONmtFEa.jpg",
+        video: "https://be6721.rcr72.waw04.cdn112.com/hls2/01/03731/xsdygbl1pnle_h/index-v1-a1.m3u8?t=-tdD7eyw8zyh6M6f5dZ1X_h1Ti_6dMA7hpKjD7ybQ1o&s=1693155540&e=43200&f=18659716&srv=30&asn=27884&sp=2000"
+      },
+      {
+        titulo: "El apagón",
+        detalles: "Estrenada en 2019. Duración 1h 43m. Género suspenso,drama.",
+        imagen: "https://image.tmdb.org/t/p/w342/sebz8U2VtsdVKOyVFnSRawnyHzo.jpg",
+        video: "https://be6721.rcr72.waw04.cdn112.com/hls2/01/02945/vuiq0uj9rwot_h/index-v1-a1.m3u8?t=xyxoe3u-DnImsQVkPfRHm4U6kWRkluXTx5lEwjQ1nl4&s=1693155668&e=43200&f=14728427&srv=07&asn=27884&sp=2000"
+      },
+      {
+        titulo: "Arctic Void",
+        detalles: "Estrenada en 2022. Duración 1h 25m. Género Suspenso,cincificcion.",
+        imagen: "https://m.media-amazon.com/images/M/MV5BMmJhYTEyYjEtMjgzNC00NTE3LThlNTYtZjRmZDUzMmM4MGE4XkEyXkFqcGdeQXVyNDg3MTQxOTg@._V1_.jpg",
+        video: "https://delivery-node-wkgtlrbhjc1mxcjt.voe-network.net/engine/hls2/01/08871/3e3d4th16gw1_,n,.urlset/index-v1-a1.m3u8?t=VDD3Q8Uv-av6YhNihN0ftkh1W8HRvfrD_urrXbddKmk&s=1693155756&e=14400&f=44357732&node=delivery-node-wkgtlrbhjc1mxcjt.voe-network.net&i=190.92&sp=2500&asn=27884"
+      },
+      {
+        titulo: "Terminal",
+        detalles: "Estrenada en 2018. Duración 1h 31m. Género crimen,drama.",
+        imagen: "https://image.tmdb.org/t/p/w342/kEXkCDG1AhjfoTJBgxDjQYn4P1t.jpg",
+        video: "https://be2719.rcr22.ams01.cdn112.com/hls2/03/02869/bc19r9569h1i_h/index-v1-a1.m3u8?t=tlr67izuQpz923rf4yWKUXJUTEILFjVkv6ReCGPMWBo&s=1693155007&e=43200&f=14349848&srv=30&asn=27884&sp=2000"
+      },
+      
+    ];
+
+    // Funciones
+function mostrarListaPeliculas() {
+    
+    lista.classList.add('visible');
+    modalLista.classList.add('visible');
+      // Mostrar spinner
+      mostrarSpinner();
+      
+      // Cargar lista después de 1 segundo
+      setTimeout(() => {
+        cargarListaPeliculas();
+        ocultarSpinner();
+      }, 1000);  
+      
+      
+    }
+
+    function mostrarDetallesPrograma(index) {
+
+      const detalles = document.getElementById('detailsContent');
+      const video = document.getElementById('videoPlayer');
+   video.poster = programas[index].imagen;
+      video.src = programas[index].video;
+      video.play();
+
+      detalles.innerHTML = `
+        <div class="movie-details">
+          <div class="movie-poster">
+            <img style="width:50px;height="70px"" src="${programas[index].imagen}" alt="${programas[index].titulo}">  
+          </div>
+    <div class="movie-info">
             <h3 ">${programas[index].titulo}</h3>  
             <p>${programas[index].detalles}</p> 
           </div>
