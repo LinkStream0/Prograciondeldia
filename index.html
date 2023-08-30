@@ -1,514 +1,276 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interfaz de Canales de TV</title>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
 
-  <title>Programación de Películas</title>
-<link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@300&display=swap" rel="stylesheet">
-  <style>
-    /* Fuentes */
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap');
+        h1 {
+            text-align: center;
+            padding: 20px;
+            background-color: #1f2532;
+            color: #fff;
+            
+            font-size: 13px;
+        }
 
-body {
-  font-family: 'Lato', sans-serif;
-  font-size: 18px;
-  font-family: 'Rowdies', cursive;
+        .barra-navegacion {
+            background-color: #1f2532;
+            overflow: hidden;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .barra-navegacion a {
+            display: inline-block;
+            color: white;
+            text-align: center;
+            padding: 10px 20px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .barra-navegacion a:hover {
+            background-color: #2c3648;
+        }
+
+        .seccion {
+            background-color: #fff;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .seccion-titulo {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #1f2532;
+        }
+
+        .canal {
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 15px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: auto;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .canal img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            background-color: #fff;
+        }
+
+        .canal:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .slick-prev,
+        .slick-next {
+            font-size: 30px;
+            color: #1f2532;
+            transition: color 0.3s;
+        }
+
+        .slick-prev:hover,
+        .slick-next:hover {
+            color: #2c3648;
+        }
+
+        .slick-prev {
+            left: -30px;
+        }
+
+        .slick-next {
+            right: -30px;
+        }
+      /* Estilos para el modal arrastrable */
+.modal-container {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            width: 100%;
+            height: 100vh;
+            overflow: auto;
+        }
+
+      .modal-content {
+        position: relative;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+         top: 50%;
+         left: 50%;
+         transform: translate(-50%, -50%);
+        padding: 20px;
+        max-width: 80%;
+        max-height: 80%;
+        overflow: auto;
+      }
+
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .modal-title {
+        font-size: 24px;
+        color: #1f2532;
+        -webkit-text-stroke:0.5px #1f2532;
+      }
+
+      .modal-close {
+   margin-right: 20px ;
+        cursor: pointer;
+        font-size: 24px;
+        color: #888;
+      }
+#videoCanal{
+   
 }
-
-h1, h2 {
-  font-family: 'Playfair Display', serif;
-  font-family: 'Rowdies', cursive;
+.modal-container.active {
+    display: flex;
+    pointer-events: auto; /* Permite la interacción solo con el modal abierto */
 }
-
-    /* Estilos Generales */
-
-body {
-  margin: 0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: #fff;  
-    background: linear-gradient(135deg, #303641 0%, #1c1e27 100%);
-    color: #fff;
-    
-}
-
-.container {
-  max-width: 800px; 
-  margin: 0 auto;
-  padding: 40px;
-  display: grid;
-  overflow: hidden ;
-}
-
-/* Botones */
-
-.movie-list-button {
-  display: inline-block;
-  padding: 7px 20px;
-  border-radius: 4px;
-  border: none;
-  background: linear-gradient(to right, gray 0%, whitesmoke 100%);
-  color: black;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 15px;
-  cursor: pointer;
-  box-shadow: inset 0 -4px 0 rgba(0,0,0,0.2);
-  transition: background 0.2s ease-out;
- -webkit-text-stroke: 0.4px black  ;
- font-family: monospace ;
-}
-
-.movie-list-button:hover {
-  background-position: right center; 
-}
-
-.live-button {
-  display: none;
-  position: fixed;
-  bottom: 20px;
-  right: 20px;  
-  padding: 15px 20px;
-  border-radius: 25px;
-  background: #e50914;
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 14px;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(229, 9, 20, 0.8);
-  animation: live-button-pulse 2s infinite;
-}
-
-@keyframes live-button-pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(229, 9, 20, 0.8);
-  }
-  
-  70% {
-    box-shadow: 0 0 0 20px rgba(229, 9, 20, 0);
-  }
-  
-  100% {
-    box-shadow: 0 0 0 0 rgba(229, 9, 20, 0);
-  }
-}
-
-/* Encabezados */
-
-h1 {
-  font-size: 32px;
-  text-transform: uppercase;
-  letter-spacing: 2px;  
-  text-align: center;
-  animation: slide-down 0.5s ease-out;
-}
-
-@keyframes slide-down {
-  0% {
-    transform: translateY(-50px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-h2 {
-  font-size: 26px;
-  font-style: italic;
-  text-align: center;
-}
-
-/* Lista de Películas */
-
-.movie-list-popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #fff;
-  border-radius: 10px;
-  padding: 30px;
-  max-width: 500px;
-  box-shadow: 0 10px 15px rgba(0,0,0,0.1);
-}
-
-.movie-list {
-  list-style: none;
-  padding: 0;
-  max-height: 300px;
-  overflow: auto;
-}
-
-.movie-list li {
-  display: flex;
-  align-items: center; 
-  padding: 12px;
-  border-radius: 4px;
-  transition: background 0.2s ease-in-out;
-}
-
-.movie-list li:hover {
-  background: #eee;  
-}
-
-.movie-list img {
-  max-width: 60px;
-  margin-right: 20px;
-  border-radius: 4px;
-}
-
-.movie-list li h3 {
-  font-size: 18px;
-  font-weight: 600;
-  margin: 0;
-} 
-
-/* Overlay */
-
-.overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-}
-
-/* Detalles de Película */
-
-.movie-details {
-  display: flex;
-  align-items: center;  
-}
-
-.movie-poster img {
-  max-width: 300px;
-  border-radius: 6px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-
-.movie-info {
-  margin-left: 40px;  
-}
-
-.movie-info h3 {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-/* Botón Cerrar */
-
-.close-button {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  color: #bbb;
-  cursor: pointer;
-}
-
-.close-button:hover {
-  color: #777;
-} 
-
-/* Video */
-
-video {
-  max-width: 100%;
-  border-radius: 8px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-}
-
-    /* Diseño Responsivo */
-    
-@media (max-width: 768px) {
-
-  h1 {
-    font-size: 28px;
-  }
-  
-  h2 {
-    font-size: 22px;
-  }
-  
-  /* Estilo para el reproductor de video */
-video {
-  width: 100%;
-  max-width: 600px;
-  border: 2px solid dimgrey;
-  border-radius: 8px;
-  background-color: #000;
-}
-
-/* Estilo para los controles de video */
-video::-webkit-media-controls-panel {
-  background-color: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  border-radius: 8px;
-  font-size: 14px;
-}
-
-/* Estilo para los botones de reproducción y pausa */
-video::-webkit-media-controls-play-button,
-video::-webkit-media-controls-pause-button {
-  background-color: #007bff;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-}
-
-/* Estilo para la barra de progreso */
-video::-webkit-media-controls-progress-bar {
-  background-color: rgba(0, 0, 0, 0.6);
-  height: 8px;
-  border-radius: 4px;
-}
-
-/* Estilo para el indicador de progreso */
-video::-webkit-media-controls-current-time-display,
-video::-webkit-media-controls-time-remaining-display {
-  color: #fff;
-  font-size: 12px;
-}
-
-/* Estilo para el botón de pantalla completa */
-video::-webkit-media-controls-fullscreen-button {
-  background-color: rgba(0, 0, 0, 0.6);
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-}
-
-  </style>
-
+    </style>
 </head>
-
 <body>
-
-  <div class="container">
-
-    <h3>Programación de Domingo</h3>
-
-    <button class="movie-list-button" onclick="mostrarListaProgramas()">
-      Ver Programación
-    </button>
-
-    <div class="movie-details" id="movieDetails">
-      <h2></h2>
-
-      <div class="details" id="detailsContent">
-        Selecciona un programa para ver más información
-      </div>
-
-     
-
+    <h1>Canales de TV</h1>
+    
+    <div class="barra-navegacion">
+        <a href="#" onclick="mostrarTodos()">Todos</a>
+        <a href="#" onclick="mostrarCategoria('Noticias')" style="display: none">Noticias</a>
+        <a href="#" onclick="mostrarCategoria('Deportes')" style="display: none">Deportes</a>
+        <!-- Agrega más categorías aquí -->
     </div>
- <video id="videoPlayer" controls muted style="width: 100%;height:250px" poster="https://www.oxigeno.fm/wp-content/uploads/2023/01/Sala-de-cine-Getty-Images.jpeg"></video>
-    <button class="live-button" id="liveButton">EN VIVO</button>
-
-  </div>
-
-
-  <div class="spinner-overlay" id="spinner">
-    <div class="spinner"></div>
-     <!--  <div class="loading">Cargando...</div>-->
-  </div>
-  <!-- Lista de Programas -->
-
-  <div class="overlay" id="overlay">
     
-    <div class="movie-list-popup" id="movieListPopup">
-    
-      <svg class="close-button" id="closebutton" onclick="cerrarListaProgramas()" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M18 6L6 18" stroke="#444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M6 6L18 18" stroke="#444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-
-      <h2>Programación</h2>
-
-      <ul class="movie-list" id="movieList">
-        <!-- Programas agregados dinámicamente -->
-      </ul>
-      
+    <div id="contenedorCanales">
+        <!-- Aquí se generarán las secciones de canales dinámicamente -->
     </div>
-
-  </div>
-
-  <script>
-
-    // Array de programas  
-    const programas = [
-       {
-         titulo: "Terminal",
-         detalles: "Estrenada en 2023. Duración 2h 19m. Género crimen,drama.",
-         imagen: "https://image.tmdb.org/t/p/w342/eCvBFo3jjKViSuhcsOdVbcsFCq4.jpg",
-         video: "https://be7713.rcr82.waw05.cdn112.com/hls2/02/03118/994cyf53hizk_h/index-v1-a1.m3u8?t=RdHXrJ6pcJwkkaKyVTQ8jU_yiAsFsBTDGzOjd6O9nkE&s=1693181873&e=43200&f=15591378&srv=25&asn=27884&sp=2000"
-       },
-       {
-         titulo: "La última casa a la izquierda",
-         detalles: "Estrenada en 2009. Duración 1h 50m. Género crimen,drama.",
-         imagen: "https://image.tmdb.org/t/p/w342/1xFvzZOwRmRelrHsZycIIfnjq3g.jpg",
-         video: "https://be6721.rcr72.waw04.cdn112.com/hls2/01/03521/0umi57bhls3c_h/index-v1-a1.m3u8?t=V6QuqcTONxHlWrtKdoDdYIE981YX0k60M4PvDr7lM-k&s=1693181713&e=43200&f=17605046&srv=01&asn=27884&sp=2000"
-       },
-       {
-         titulo: "Breaking:Quiebre",
-         detalles: "Estrenada en 2022. Duración 1h 3m. Género crimen,drama.",
-         imagen: "https://image.tmdb.org/t/p/w342/flvBRXTrbGr5SyGgCk3b3JACutL.jpg",
-         video: "https://be2719.rcr22.ams01.cdn112.com/hls2/01/03276/wyju0jyeh835_h/index-v1-a1.m3u8?t=2S5iDjKJLGQ1fIxVp1qjbFepTpX6_mXHOv6HREw6HaM&s=1693181586&e=43200&f=16383686&srv=10&asn=27884&sp=2000"
-       },
-       {
-        titulo: "Misión: Imposible - Sentencia mortal parte uno",
-        detalles: "Estrenada en 2023. Duración 2h 41m. Género crimen,drama.",
-        imagen: "https://image.tmdb.org/t/p/w342/83sGKvCv2T2CulYbd40Aeduc7n2.jpg",
-        video: "https://be7713.rcr82.waw05.cdn112.com/hls2/01/04198/5tnlfbmayfod_h/index-v1-a1.m3u8?t=nvc8G5UHyuz2p06PB-gam9qWTzQ92wgBUy52Tz6oIxg&s=1693181461&e=43200&f=20993037&srv=21&asn=27884&sp=2000"
-      },
-       {
-         titulo: "Insidious: La puerta roja",
-         detalles: "Estrenada en 2023. Duración 1h 7m. Género crimen,drama.",
-         imagen: "https://image.tmdb.org/t/p/w342/wD4eLIHUaTvrXQqAzlfduHQ1NYg.jpg",
-         video: "https://apq5wfuf.sw-cdnstream.com/hls2/01/01210/rrzzv7kilp5g_n/index-v1-a1.m3u8?t=4RoFRd1wKVZ-wTsshLSO-eJj8BaP0PKgqZ6wFhH8foc&s=1693181198&e=129600&f=6051024&srv=taRfBm9JSx9c&i=0.4&sp=500&p1=taRfBm9JSx9c&p2=taRfBm9JSx9c&asn=27884"
-       },
-      {
-        titulo: "Megalodón 2: El gran abismo",
-        detalles: "Estrenada en 2023. Duración 1h 54m. Género acción,cienciaficcion",
-        imagen: "https://image.tmdb.org/t/p/w342/mBgynPDplmo5JTY9VfGqY35OjDu.jpg", 
-        video: "https://delivery-node-5scphn10nmokfrsv.voe-network.net/engine/hls2-c/01/09351/ao7toc5uwgla_,n,.urlset/index-v1-a1.m3u8?t=IOB7u4aNIaQ6tpTxc9dvusX7Z6w5m4s9w10fr_O-JoM&s=1693156202&e=14400&f=46758474&node=delivery-node-dab59unagzatnxkw.voe-network.net&i=190.92&sp=2500&asn=27884"
-      },
-      {
-        titulo: "Oppenheimer",
-        detalles: "Estrenada en 2023. Duracion 3h  Género drama Historico.",  
-        imagen: "https://image.tmdb.org/t/p/w342/ncKCQVXgk4BcQV6XbvesgZ2zLvZ.jpg",
-        video: "https://be6721.rcr72.waw04.cdn112.com/hls2/01/04246/d81sy5d0iect_h/index-v1-a1.m3u8?t=FU9logdna9KmbwVXCsErmrRSrOM-1AyLSipU4ChzUF8&s=1693155316&e=43200&f=21231460&srv=26&asn=27884&sp=2000"
-      },
-      {
-        titulo: "Ghosting", 
-        detalles: "Estrenada en 2023. Duración 2h . Género Romace,comedia.",
-        imagen: "https://image.tmdb.org/t/p/w342/zSw2JeQ03GivcS4VKJmWK5sYi1F.jpg",
-        video: "https://be2719.rcr22.ams01.cdn112.com/hls2/01/03594/qs2i584leqrs_h/index-v1-a1.m3u8?t=rskiGkXdAJL5qkABW40L0jCyXSNQQ48p6AWQOQAqaAA&s=1693155480&e=43200&f=17974044&srv=20&asn=27884&sp=2000"
-      },
-            {
-        titulo: "Ruby: Aventuras de una kraken adolescente", 
-        detalles: "Estrenada en 2023. Duración 1h 31m. Género Animacion,comedia.",
-        imagen: "https://image.tmdb.org/t/p/w1280/ioCuhiUs0SW5UgembG0UiQZWPLY.jpg",
-        video: "https://be6721.rcr72.waw04.cdn112.com/hls2/01/04246/gmjvbvsz0wks_h/index-v1-a1.m3u8?t=lGc2JkALTL05lpRymou1kDsmYhnjQlzFTHXPkMg0ShA&s=1693155418&e=43200&f=21231225&srv=24&asn=27884&sp=2000"
-      },
-      {
-        titulo: "Resident Evil: Bienvenidos a Raccoon City",
-        detalles: "Estrenada en 2021. Duración 1h 47m. Género Accion,terror.",
-        imagen: "https://image.tmdb.org/t/p/w342/htpKy3nUBNtCsaTj2pWU9JwPKlj.jpg",
-        video: "https://be7713.rcr82.waw05.cdn112.com/hls2/02/02925/9fb6rxcauy0n_h/index-v1-a1.m3u8?t=EE42rB_jofdBbQ_p1mNnB2CDxctrVZUxeLPID7x_NKU&s=1693155095&e=43200&f=14625211&srv=28&asn=27884&sp=2000"
-      },
-      {
-        titulo: "Guardianes de la Galaxia: Volumen 3",
-        detalles: "Estrenada en 2023. Duración 2h 31m. Género Accion,Aventura.",
-        imagen: "https://image.tmdb.org/t/p/w342/raSxI20efBO4WszIO7UVONmtFEa.jpg",
-        video: "https://be6721.rcr72.waw04.cdn112.com/hls2/01/03731/xsdygbl1pnle_h/index-v1-a1.m3u8?t=-tdD7eyw8zyh6M6f5dZ1X_h1Ti_6dMA7hpKjD7ybQ1o&s=1693155540&e=43200&f=18659716&srv=30&asn=27884&sp=2000"
-      },
-      {
-        titulo: "El apagón",
-        detalles: "Estrenada en 2019. Duración 1h 43m. Género suspenso,drama.",
-        imagen: "https://image.tmdb.org/t/p/w342/sebz8U2VtsdVKOyVFnSRawnyHzo.jpg",
-        video: "https://be6721.rcr72.waw04.cdn112.com/hls2/01/02945/vuiq0uj9rwot_h/index-v1-a1.m3u8?t=xyxoe3u-DnImsQVkPfRHm4U6kWRkluXTx5lEwjQ1nl4&s=1693155668&e=43200&f=14728427&srv=07&asn=27884&sp=2000"
-      },
-      {
-        titulo: "Arctic Void",
-        detalles: "Estrenada en 2022. Duración 1h 25m. Género Suspenso,cincificcion.",
-        imagen: "https://m.media-amazon.com/images/M/MV5BMmJhYTEyYjEtMjgzNC00NTE3LThlNTYtZjRmZDUzMmM4MGE4XkEyXkFqcGdeQXVyNDg3MTQxOTg@._V1_.jpg",
-        video: "https://delivery-node-wkgtlrbhjc1mxcjt.voe-network.net/engine/hls2/01/08871/3e3d4th16gw1_,n,.urlset/index-v1-a1.m3u8?t=VDD3Q8Uv-av6YhNihN0ftkh1W8HRvfrD_urrXbddKmk&s=1693155756&e=14400&f=44357732&node=delivery-node-wkgtlrbhjc1mxcjt.voe-network.net&i=190.92&sp=2500&asn=27884"
-      },
-      {
-        titulo: "Terminal",
-        detalles: "Estrenada en 2018. Duración 1h 31m. Género crimen,drama.",
-        imagen: "https://image.tmdb.org/t/p/w342/kEXkCDG1AhjfoTJBgxDjQYn4P1t.jpg",
-        video: "https://be2719.rcr22.ams01.cdn112.com/hls2/03/02869/bc19r9569h1i_h/index-v1-a1.m3u8?t=tlr67izuQpz923rf4yWKUXJUTEILFjVkv6ReCGPMWBo&s=1693155007&e=43200&f=14349848&srv=30&asn=27884&sp=2000"
-      },
-      
-    ];
-
-
-    // Funciones
-function mostrarListaPeliculas() {
     
-    lista.classList.add('visible');
-    modalLista.classList.add('visible');
-      // Mostrar spinner
-      mostrarSpinner();
-      
-      // Cargar lista después de 1 segundo
-      setTimeout(() => {
-        cargarListaPeliculas();
-        ocultarSpinner();
-      }, 1000);  
-      
-      
-    }
-
-    function mostrarDetallesPrograma(index) {
-
-      const detalles = document.getElementById('detailsContent');
-      const video = document.getElementById('videoPlayer');
-   video.poster = programas[index].imagen;
-      video.src = programas[index].video;
-      video.play();
-
-      detalles.innerHTML = `
-        <div class="movie-details">
-          <div class="movie-poster">
-            <img style="width:50px;height="70px"" src="${programas[index].imagen}" alt="${programas[index].titulo}">  
-          </div>
-          <div class="movie-info">
-            <h3 ">${programas[index].titulo}</h3>  
-            <p>${programas[index].detalles}</p> 
-          </div>
+    <!-- Modal arrastrable -->
+    <div id="modal" class="modal-container">
+        <div class="modal-header">
+            <div class="modal-title">Canal 1</div>
+            <div class="modal-close" onclick="cerrarModal()">x</div>
         </div>
-      `;
+        <div class="modal-content">
+<video id="videoCanal" src="" controls style="width: 100%; height: 400px"></video>
+        </div>
+    </div>
 
-      mostrarBotonEnVivo();
-cerrarListaProgramas();
-    }
-
-    function mostrarListaProgramas() {
-
-      const overlay = document.getElementById('overlay');
-      const listPopup = document.getElementById('movieListPopup');
-      const list = document.getElementById('movieList');
-
-      overlay.style.display = 'block';
-      listPopup.style.display = 'block';
-
-      programas.forEach((p, index) => {
-
-        const listItem = document.createElement('li');
+    
+    <script>
+        // Supongamos que tienes un arreglo llamado 'canales' con categorías
+        var canales = [
+            { nombre: 'cineAR', logo: 'https://dl.dropbox.com/scl/fi/a4rrggvvp1s3i7kf46q4h/CINE.AR-PLAY_Amazon.es_Appstore-for-Android.png?rlkey=wya32g6vt2a6z20lout0p73hp', categoria: 'cine', enlace:'https://538d0bde28ccf.streamlock.net/live-cont.ar/cinear/playlist.m3u8' },
+            { nombre: 'Canela.tv', logo: 'https://dl.dropbox.com/scl/fi/j70twuo549qmd71xsxwsj/Categor-a_Pel-culas-y-series-disponibles-en-Canela-TV.png?rlkey=hb5n5l4csb28811vfdn54r5uh', categoria: 'cine',enlace:'https://ov.ottera.tv/channels/cnm_ctm_ro/master.m3u8' },
+            { nombre: 'Todo cine', logo: 'https://dl.dropbox.com/scl/fi/iesudcpt2k2gdgoe9d4p8/SUS-Producciones-_.jpg?rlkey=n5k77brpa44bj3y967zp1sdhr', categoria: 'cine',enlace:'https://stream.ads.ottera.tv/playlist.m3u8?network_id=4565' },
+            { nombre: 'CineKids', logo: 'https://dl.dropbox.com/scl/fi/g0wx2ibyvxa2okx90zmax/CineKids.png?rlkey=vnw0t8j2gs6zzfqhqywqgucva', categoria: 'cine',enlace:'https://stream.ads.ottera.tv/playlist.m3u8?network_id=3506' },
+            { nombre: 'Runtime Tv', logo: 'https://dl.dropbox.com/scl/fi/autiumpajj1yjgxfmk593/Runtime-Espa-ol-_-Runtime.jpg?rlkey=paqmfju3x30ebog1jbul3ddw5', categoria: 'cine',enlace:'https://stream.ads.ottera.tv/playlist.m3u8?network_id=2649' },
+            { nombre: 'Cine Romantico', logo: 'https://dl.dropbox.com/scl/fi/twgrgdj8p4n885e2o1i8s/UP-Entertainment-en-asociaci-n-con-PixL-Dos-present-el.jpg?rlkey=x5inaildtldnw3u52wtjv3wll', categoria: 'cine',enlace:'https://stream.ads.ottera.tv/playlist.m3u8?network_id=656' }
+            // Agrega más canales aquí
+        ];
         
-        listItem.innerHTML = `
-          <img src="${p.imagen}" alt="${p.titulo}">
-          <h3 style="color:gray">${p.titulo}</h3>
-        `;
+        var contenedor = document.getElementById("contenedorCanales");
+        var modal = document.getElementById("modal");
+        
+        function mostrarTodos() {
+            contenedor.innerHTML = '';
+            canales.forEach(function(canal) {
+                agregarCanal(canal);
+            });
+        }
+        
+        function mostrarCategoria(categoria) {
+            contenedor.innerHTML = '';
+            canales.forEach(function(canal) {
+                if (canal.categoria === categoria) {
+                    agregarCanal(canal);
+                }
+            });
+        }
 
-        listItem.addEventListener('click', () => mostrarDetallesPrograma(index));
+        function agregarCanal(canal) {
+            var seccion = document.getElementById(canal.categoria);
+            if (!seccion) {
+                seccion = document.createElement("div");
+                seccion.id = canal.categoria;
+                seccion.className = "seccion";
+                var titulo = document.createElement("h2");
+                titulo.className = "seccion-titulo";
+                titulo.textContent = canal.categoria;
+                seccion.appendChild(titulo);
+                contenedor.appendChild(seccion);
+            }
 
-        list.appendChild(listItem);
+            var canalDiv = document.createElement("div");
+            canalDiv.className = "canal";
+            
+            var logoImg = document.createElement("img");
+            logoImg.src = canal.logo;
+            
+            canalDiv.addEventListener("click", function() {
+                abrirModal(canal);
+            });
+            
+            canalDiv.appendChild(logoImg);
+            
+            seccion.appendChild(canalDiv);
+        }
+function abrirModal(canal) {
+            var modalTitle = modal.querySelector(".modal-title");
+            modalTitle.textContent = canal.nombre;
 
-      });
+            // Puedes agregar aquí el contenido del reproductor para el canal
+videoCanal.src =  canal.enlace;
+            modal.style.display = "block";
+            videoCanal.poster = canal.logo;
+            
+        }
 
-    }
-
-    function cerrarListaProgramas() {
-      const overlay = document.getElementById('overlay');
-      const listPopup = document.getElementById('movieListPopup');
-      overlay.style.display = 'none';
-      listPopup.style.display = 'none';
-      document.getElementById('movieList').innerHTML='';
-    }
-
-    function mostrarBotonEnVivo() {
-     // document.getElementById('liveButton').style.display = 'block'; 
-    }
-
-  </script>
-
+        function cerrarModal() {
+            modal.style.display = "none";
+            videoCanal.src= '';
+        }
+        $(document).ready(function() {
+            $(".canal").slick({
+                infinite: true,
+                slidesToShow: 1,  // Cambia este valor según cuántos canales quieras mostrar en cada diapositiva
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 2000
+            });
+        });
+        
+        mostrarTodos(); // Mostrar todos los canales al cargar la página
+    </script>
 </body>
 </html>
