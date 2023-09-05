@@ -169,8 +169,8 @@
     
     <div class="barra-navegacion">
         <a href="#" onclick="mostrarTodos()">Todos</a>
-        <a href="#" onclick="mostrarCategoria('Noticias')" style="display: none">Noticias</a>
-        <a href="#" onclick="mostrarCategoria('Deportes')" style="display: none">Deportes</a>
+        <a href="#" onclick="mostrarCategoria('cine')" >Cine</a>
+        <a href="#" onclick="mostrarCategoria('deporte')" >Deportes</a>
         <!-- Agrega más categorías aquí -->
     </div>
     
@@ -186,6 +186,7 @@
         </div>
         <div class="modal-content">
 <video id="videoCanal" src="" controls style="width: 100%; height: 400px"></video>
+<iframe src="" frameborder="0" id="iframe1"  style="display:none;width: 100%; height: 400px"></iframe>
         </div>
     </div>
 
@@ -203,8 +204,21 @@
                   { nombre: 'Runtime Crimen', logo: 'https://dl.dropbox.com/scl/fi/9q3jdn5i7rfges4ubttw7/Runtime-Crimen.webp?rlkey=nomiynnccufys3pvl0lngapaf', categoria: 'cine',enlace:'https://stream.ads.ottera.tv/playlist.m3u8?network_id=3527' }
 ,   { nombre: 'Canela Cinema 2', logo: 'https://dl.dropbox.com/scl/fi/1tf3rpj9xei1i4yomm6sy/Canela-Cinema-2.webp?rlkey=hznkeoazmssqzbrhvzh6puqe8', categoria: 'cine',enlace:'https://ov.ottera.tv/channels/cnm_cn_mv_mx/master.m3u8' },
    { nombre: 'Top Cine', logo: 'https://dl.dropbox.com/scl/fi/93tqscwfi5dyew4luji8s/Top-Cine.png?rlkey=iztm29kjejp8y2mngrqvq0v0w', categoria: 'cine',enlace:'https://topcinelatam-freetv.amagi.tv/TopCineLATAMx/master.m3u8' },
-      { nombre: 'Runtime Accion', logo: 'https://dl.dropbox.com/scl/fi/4w0m47h09zlu5v3vrqosx/Runtime-Acci-n.webp?rlkey=10k9tr6pv7ev3u8pmo0i4yaqs', categoria: 'cine',enlace:'https://stream.ads.ottera.tv/playlist.m3u8?network_id=3058' }
+      { nombre: 'Runtime Accion', logo: 'https://dl.dropbox.com/scl/fi/4w0m47h09zlu5v3vrqosx/Runtime-Acci-n.webp?rlkey=10k9tr6pv7ev3u8pmo0i4yaqs', categoria: 'cine',enlace:'https://stream.ads.ottera.tv/playlist.m3u8?network_id=3058' },
             // Agrega más canales aquí
+            //Deportes
+                { nombre: 'espn', logo: 'https://dl.dropbox.com/scl/fi/op8q8c2nbd5rmz1y3qqq8/espn-logo-0.png?rlkey=daf9dy2zrps0cqppvs6bfqgwj', categoria: 'deporte',enlace:'https://embed.telextrema.com/embed2/espn.html',
+                iframe:true},
+                { nombre: 'espn2', logo: 'https://dl.dropbox.com/scl/fi/th7g1dafpblpw61ay1l5v/ESPN2-Logo-PNG-vector-in-SVG-PDF-AI-CDR-format.jpg?rlkey=7ap69dh7h7gfazlqc6ujtbz9f', categoria: 'deporte',enlace:'https://embed.telextrema.com/embed/espn2.html',
+                iframe:true} ,
+               { nombre: 'espn3', logo: 'https://dl.dropbox.com/scl/fi/dvtapj9c2p4pck04fnscg/ESPN3-Now-Available-to-Optimum-Online-Customers-ESPN-Press.jpg?rlkey=yiyp02ayqy9ttahviz67zi5g7', categoria: 'deporte',enlace:'https://embed.telextrema.com/embed/espn3.html',
+                iframe:true},
+               { nombre: 'foxsports', logo: 'https://dl.dropbox.com/scl/fi/dlqoh6pwrookyt8t8a50r/Fox-Sports-Logo-PNG-vector-in-SVG-PDF-AI-CDR-format.jpg?rlkey=x2c1aczg9fr0mqekfp1pumcjp', categoria: 'deporte',enlace:'https://embed.telextrema.com/embed/foxsports.html',
+                iframe:true},
+                { nombre: 'foxsports2', logo: 'https://dl.dropbox.com/scl/fi/3u0jhoh39mcmaa6oe0jt2/Archivo_Fox-Sports-2-Argentina-2023.svg-Wikipedia-la.png?rlkey=xiuogocfdh82hp0is19p129d6', categoria: 'deporte',enlace:'https://embed.telextrema.com/embed/foxsports2.html',
+                iframe:true},
+                { nombre: 'tycsports', logo: 'https://dl.dropbox.com/scl/fi/yjf820loryzka31vx4bwv/TyC-Sports-Logo-PNG-vector-in-SVG-PDF-AI-CDR-format.webp?rlkey=onmsplxesqlv9dj39nep9uaty', categoria: 'deporte',enlace:'https://embed.telextrema.com/embed/tycsports.html',
+                iframe:true}
         ];
         
         var contenedor = document.getElementById("contenedorCanales");
@@ -256,7 +270,14 @@
 function abrirModal(canal) {
             var modalTitle = modal.querySelector(".modal-title");
             modalTitle.textContent = canal.nombre;
-
+if(canal.iframe==true){
+  iframe1.style.display ='flex';
+  videoCanal.style.display ='none';
+  iframe1.src = canal.enlace;
+}else{
+  iframe1.style.display ='none';
+videoCanal.style.display ='flex';
+}
             // Puedes agregar aquí el contenido del reproductor para el canal
 videoCanal.src =  canal.enlace;
             modal.style.display = "block";
@@ -267,6 +288,7 @@ videoCanal.src =  canal.enlace;
         function cerrarModal() {
             modal.style.display = "none";
             videoCanal.src= '';
+            iframe1.src= '';
         }
         $(document).ready(function() {
             $(".canal").slick({
