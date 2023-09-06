@@ -162,7 +162,21 @@
     display: flex;
     pointer-events: auto; /* Permite la interacción solo con el modal abierto */
 }
+/**fullscreem***/
+#fullscreen-btn {
+  background-color: transparent;
+  border: none;
+  color: gray;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+#fullscreen-btn:hover {
+  color: #333;
+}
+
     </style>
+        <script src="https://kit.fontawesome.com/32ac7cd722.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <h1>Canales de TV</h1>
@@ -186,7 +200,11 @@
         </div>
         <div class="modal-content">
 <video id="videoCanal" src="" controls style="width: 100%; height: 400px"></video>
-<iframe src="" frameborder="0" id="iframe1"  style="display:none;width: 100%; height: 400px"></iframe>
+<!--iframe-->
+<div id="c_Iframe" style="display:none;width: 100%; height: 400px">
+<iframe src="" frameborder="0" id="iframe1"  style="width: 100%; height: 400px"></iframe>
+   <button id="fullscreen-btn" onclick="toggleFullscreen()"><i class="fas fa-expand"></i> </button>
+</div>
         </div>
     </div>
 
@@ -194,6 +212,7 @@
     <script>
         // Supongamos que tienes un arreglo llamado 'canales' con categorías
         var canales = [
+          { nombre: 'star Action', logo: 'https://dl.dropbox.com/scl/fi/c3x3oviqck9oesliksjxj/Programaci-n-Star-Action-Oeste-Hoy-_-Programaci-n-de-TV-en.png?rlkey=i3a6me09dw9rv4mxuc5k8b3xi', categoria: 'cine', enlace:'https://embed.telextrema.com/embed/staraction.html' ,iframe:true},
             { nombre: 'cineAR', logo: 'https://dl.dropbox.com/scl/fi/a4rrggvvp1s3i7kf46q4h/CINE.AR-PLAY_Amazon.es_Appstore-for-Android.png?rlkey=wya32g6vt2a6z20lout0p73hp', categoria: 'cine', enlace:'https://538d0bde28ccf.streamlock.net/live-cont.ar/cinear/playlist.m3u8' },
             { nombre: 'Canela.tv', logo: 'https://dl.dropbox.com/scl/fi/j70twuo549qmd71xsxwsj/Categor-a_Pel-culas-y-series-disponibles-en-Canela-TV.png?rlkey=hb5n5l4csb28811vfdn54r5uh', categoria: 'cine',enlace:'https://ov.ottera.tv/channels/cnm_ctm_ro/master.m3u8' },
             { nombre: 'Todo cine', logo: 'https://dl.dropbox.com/scl/fi/iesudcpt2k2gdgoe9d4p8/SUS-Producciones-_.jpg?rlkey=n5k77brpa44bj3y967zp1sdhr', categoria: 'cine',enlace:'https://stream.ads.ottera.tv/playlist.m3u8?network_id=4565' },
@@ -218,6 +237,8 @@
                 { nombre: 'foxsports2', logo: 'https://dl.dropbox.com/scl/fi/3u0jhoh39mcmaa6oe0jt2/Archivo_Fox-Sports-2-Argentina-2023.svg-Wikipedia-la.png?rlkey=xiuogocfdh82hp0is19p129d6', categoria: 'deporte',enlace:'https://embed.telextrema.com/embed/foxsports2.html',
                 iframe:true},
                 { nombre: 'tycsports', logo: 'https://dl.dropbox.com/scl/fi/yjf820loryzka31vx4bwv/TyC-Sports-Logo-PNG-vector-in-SVG-PDF-AI-CDR-format.webp?rlkey=onmsplxesqlv9dj39nep9uaty', categoria: 'deporte',enlace:'https://embed.telextrema.com/embed/tycsports.html',
+                iframe:true},
+                { nombre: 'directvsports', logo: 'https://dl.dropbox.com/scl/fi/4bnmc803rpqzbhv1wsy1w/Qu-es-DirecTV-Sports-y-c-mo-verlo.webp?rlkey=ckowo26euv1s3bdr71bb8u5ig', categoria: 'deporte',enlace:'https://embed.telextrema.com/embed/directvsports.html',
                 iframe:true}
         ];
         
@@ -271,11 +292,12 @@ function abrirModal(canal) {
             var modalTitle = modal.querySelector(".modal-title");
             modalTitle.textContent = canal.nombre;
 if(canal.iframe==true){
-  iframe1.style.display ='flex';
+  c_Iframe.style.display ='grid';
   videoCanal.style.display ='none';
   iframe1.src = canal.enlace;
 }else{
-  iframe1.style.display ='none';
+  iframe1.src = '';
+  c_Iframe.style.display ='none';
 videoCanal.style.display ='flex';
 }
             // Puedes agregar aquí el contenido del reproductor para el canal
@@ -301,6 +323,32 @@ videoCanal.src =  canal.enlace;
         });
         
         mostrarTodos(); // Mostrar todos los canales al cargar la página
+    </script>
+    <script>
+      function toggleFullscreen() {
+        const iframe = document.getElementById('iframe1');
+        if (!document.fullscreenElement) {
+          if (iframe.requestFullscreen) {
+            iframe.requestFullscreen();
+          } else if (iframe.mozRequestFullScreen) {
+            iframe.mozRequestFullScreen();
+          } else if (iframe.webkitRequestFullscreen) {
+            iframe.webkitRequestFullscreen();
+          } else if (iframe.msRequestFullscreen) {
+            iframe.msRequestFullscreen();
+          }
+        } else {
+          if (document.exitFullscreen) {
+            document.exitFullscreen();
+          } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+          } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+          } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+          }
+        }
+      }
     </script>
 </body>
 </html>
